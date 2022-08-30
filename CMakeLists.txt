@@ -309,13 +309,14 @@ target_compile_options(apsi PUBLIC -DUSE_SECURE_SEED)
 target_compile_options(apsi PUBLIC -DUSE_ENDO=true)
 
 # Set system
-if(MSVC)
-    target_compile_options(apsi PUBLIC -D__WINDOWS__)
-elseif (UNIX)
+# if(MSVC)
+    # target_compile_options(apsi PUBLIC -D__WINDOWS__)
+# elseif (UNIX)
     target_compile_options(apsi PUBLIC -D__LINUX__)
-endif()
+# endif()
 
 # Set architecture
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 include(DetectArch)
 if(APSI_FOURQ_ARM64)
     # _ARM64_ needs to be set whether the ARM64 optimizations are used
