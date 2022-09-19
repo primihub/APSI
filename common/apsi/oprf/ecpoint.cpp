@@ -21,31 +21,32 @@
 using namespace std;
 using namespace seal;
 
+
 namespace apsi {
     namespace oprf {
-        namespace {
-            void random_scalar(ECPoint::scalar_span_type value)
-            {
-                random_bytes(value.data(), seal::util::safe_cast<unsigned int>(value.size()));
-                modulo_order(
-                    reinterpret_cast<digit_t *>(value.data()),
-                    reinterpret_cast<digit_t *>(value.data()));
-            }
+        // namespace {
+            // void random_scalar(ECPoint::scalar_span_type value)
+            // {
+            //     random_bytes(value.data(), seal::util::safe_cast<unsigned int>(value.size()));
+            //     modulo_order(
+            //         reinterpret_cast<digit_t *>(value.data()),
+            //         reinterpret_cast<digit_t *>(value.data()));
+            // }
 
-            digit_t is_nonzero_scalar(ECPoint::scalar_span_type value)
-            {
-                const digit_t *value_ptr = reinterpret_cast<digit_t *>(value.data());
-                digit_t c = 0;
+            // digit_t is_nonzero_scalar(ECPoint::scalar_span_type value)
+            // {
+            //     const digit_t *value_ptr = reinterpret_cast<digit_t *>(value.data());
+            //     digit_t c = 0;
 
-                for (size_t i = 0; i < NWORDS_ORDER; i++) {
-                    c |= value_ptr[i];
-                }
+            //     for (size_t i = 0; i < NWORDS_ORDER; i++) {
+            //         c |= value_ptr[i];
+            //     }
 
-                sdigit_t first_nz = -static_cast<sdigit_t>(c & 1);
-                sdigit_t rest_nz = -static_cast<sdigit_t>(c >> 1);
-                return static_cast<digit_t>((first_nz | rest_nz) >> (8 * sizeof(digit_t) - 1));
-            }
-        } // namespace
+            //     sdigit_t first_nz = -static_cast<sdigit_t>(c & 1);
+            //     sdigit_t rest_nz = -static_cast<sdigit_t>(c >> 1);
+            //     return static_cast<digit_t>((first_nz | rest_nz) >> (8 * sizeof(digit_t) - 1));
+            // }
+        // } // namespace
 
         ECPoint::ECPoint(input_span_const_type value)
         {
@@ -71,13 +72,13 @@ namespace apsi {
             }
         }
 
-        void ECPoint::MakeRandomNonzeroScalar(scalar_span_type out)
-        {
-            // Loop until we find a non-zero element
-            do {
-                random_scalar(out);
-            } while (!is_nonzero_scalar(out));
-        }
+        // void ECPoint::MakeRandomNonzeroScalar(scalar_span_type out)
+        // {
+        //     // Loop until we find a non-zero element
+        //     do {
+        //         random_scalar(out);
+        //     } while (!is_nonzero_scalar(out));
+        // }
 
         void ECPoint::InvertScalar(scalar_span_const_type in, scalar_span_type out)
         {

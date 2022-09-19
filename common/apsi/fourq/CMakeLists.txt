@@ -20,6 +20,7 @@ install(
         ${CMAKE_CURRENT_LIST_DIR}/FourQ_tables.h
         ${CMAKE_CURRENT_LIST_DIR}/FourQ.h
         ${CMAKE_CURRENT_LIST_DIR}/table_lookup.h
+        ${CMAKE_CURRENT_LIST_DIR}/random.h
     DESTINATION
         ${APSI_INCLUDES_INSTALL_DIR}/apsi/fourq
 )

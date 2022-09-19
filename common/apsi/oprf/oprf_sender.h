@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma once
-
+// #pragma once
+#ifndef COMMON_APSI_OPRF_OPRF_SENDER_H__
+#define COMMON_APSI_OPRF_OPRF_SENDER_H__
 // STD
 #include <cstddef>
 #include <iostream>
@@ -20,10 +21,12 @@
 // APSI
 #include "apsi/item.h"
 #include "apsi/oprf/oprf_common.h"
+#include "apsi/oprf/ecpoint.h"
 
 // GSL
 #include "gsl/span"
 
+using apsi::oprf::ECPoint;
 namespace apsi {
     namespace oprf {
         class OPRFKey {
@@ -58,7 +61,7 @@ namespace apsi {
             void create()
             {
                 // Create a random key
-                ECPoint::MakeRandomNonzeroScalar(
+                MakeRandomNonzeroScalar(
                     oprf_key_span_type{ oprf_key_.begin(), oprf_key_size });
             }
 
@@ -109,3 +112,5 @@ namespace apsi {
         }; // class OPRFSender
     }      // namespace oprf
 } // namespace apsi
+
+#endif //COMMON_APSI_OPRF_OPRF_SENDER_H__

@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma once
-
+// #pragma once
+#ifndef COMMON_APSI_OPRF_ECPOINT_H__
+#define COMMON_APSI_OPRF_ECPOINT_H__
 // STD
 #include <array>
 #include <cstddef>
@@ -15,9 +16,22 @@
 
 // FourQ
 #include "apsi/fourq/FourQ.h"
+// FourQ
+#include "apsi/fourq/FourQ_api.h"
+#include "apsi/fourq/FourQ_internal.h"
+#include "apsi/fourq/random.h"
+
+// SEAL
+#include "seal/randomgen.h"
+#include "seal/util/blake2.h"
+
+using namespace std;
+using namespace seal;
 
 namespace apsi {
     namespace oprf {
+
+
         class ECPoint {
         public:
             static constexpr std::size_t save_size = sizeof(f2elm_t);
@@ -56,7 +70,15 @@ namespace apsi {
 
             // Creates a random non-zero number modulo the prime order subgroup
             // order and computes its inverse.
-            static void MakeRandomNonzeroScalar(scalar_span_type out);
+            // static void MakeRandomNonzeroScalar(scalar_span_type out) {
+                 
+            //     // Loop until we find a non-zero element
+            //     do {
+            //         random_scalar(out);
+            //     } while (!is_nonzero_scalar(out));
+        
+            // }
+
 
             static void InvertScalar(scalar_span_const_type in, scalar_span_type out);
 
@@ -75,6 +97,49 @@ namespace apsi {
         private:
             // Initialize to neutral element
             point_t pt_ = { { { { 0 } }, { { 1 } } } }; // { {.x = { 0 }, .y = { 1 } }};
-        };                                              // class ECPoint
+        };        
+        
+                                              // class ECPoint
+        // namespace {
+            // void random_scalar(ECPoint::scalar_span_type value);
+           
+            // digit_t is_nonzero_scalar(ECPoint::scalar_span_type value);
+        // }
+
+        static   void random_scalar(ECPoint::scalar_span_type value)
+            {
+                random_bytes(value.data(), seal::util::safe_cast<unsigned int>(value.size()));
+                modulo_order(
+                    reinterpret_cast<digit_t *>(value.data()),
+                    reinterpret_cast<digit_t *>(value.data()));
+            }
+
+          static  digit_t is_nonzero_scalar(ECPoint::scalar_span_type value)
+            {
+                const digit_t *value_ptr = reinterpret_cast<digit_t *>(value.data());
+                digit_t c = 0;
+
+                for (size_t i = 0; i < NWORDS_ORDER; i++) {
+                    c |= value_ptr[i];
+                }
+
+                sdigit_t first_nz = -static_cast<sdigit_t>(c & 1);
+                sdigit_t rest_nz = -static_cast<sdigit_t>(c >> 1);
+                return static_cast<digit_t>((first_nz | rest_nz) >> (8 * sizeof(digit_t) - 1));
+            }
+
+
+        // Creates a random non-zero number modulo the prime order subgroup
+        // order and computes its inverse.
+        static void MakeRandomNonzeroScalar(ECPoint::scalar_span_type out) {
+                 
+            // Loop until we find a non-zero element
+            do {
+                    random_scalar(out);
+                } while (!is_nonzero_scalar(out));
+        
+            }
     }                                                   // namespace oprf
 } // namespace apsi
+
+#endif  // COMMON_APSI_OPRF_ECPOINT_H__

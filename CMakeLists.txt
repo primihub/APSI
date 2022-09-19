@@ -270,7 +270,7 @@ apsi_set_language(apsi)
 target_include_directories(apsi PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/common>
     $<INSTALL_INTERFACE:${APSI_INCLUDES_INSTALL_DIR}>
-    /opt/homebrew/Cellar/flatbuffers/2.0.6/include/)
+    /opt/homebrew/Cellar/flatbuffers/2.0.7/include/)
 target_include_directories(apsi PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/sender>
     $<INSTALL_INTERFACE:${APSI_INCLUDES_INSTALL_DIR}>)
@@ -294,7 +294,7 @@ target_link_libraries(apsi
     PUBLIC SEAL::seal
     PUBLIC Kuku::kuku
     # PUBLIC flatbuffers
-    PUBLIC jsoncpp
+    # PUBLIC jsoncpp
 )
 if(APSI_USE_LOG4CPLUS)
     target_link_libraries(apsi PUBLIC log4cplus::log4cplus)
@@ -436,7 +436,7 @@ endif()
 
 if(APSI_BUILD_CLI)
     link_directories(
-        /opt/homebrew/Cellar/flatbuffers/2.0.6/lib
+        /opt/homebrew/Cellar/flatbuffers/2.0.7/lib
         /Users/chb/Projects/deps/APSI/build/lib)
     add_library(common_cli OBJECT)
     add_subdirectory(cli/common)
