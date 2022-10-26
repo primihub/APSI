@@ -32,10 +32,10 @@ extern "C" {
 
 #if defined(__WINDOWS__) // Microsoft Windows OS
 #define OS_TARGET OS_WIN
-#elif defined(__LINUX__) // Linux OS
-#define OS_TARGET OS_LINUX
+//#elif defined(__LINUX__) // Linux OS
 #else
-#error-- "Unsupported OS"
+#define OS_TARGET OS_LINUX
+//#error-- "Unsupported OS"
 #endif
 
 // Definition of compiler
@@ -60,7 +60,7 @@ extern "C" {
 #define TARGET_x86 2
 #define TARGET_ARM 3
 #define TARGET_ARM64 4
-#define _AMD64_ 1
+// #define _AMD64_ 1
 #if defined(_AMD64_)
 #define TARGET TARGET_AMD64
 #define RADIX 64
