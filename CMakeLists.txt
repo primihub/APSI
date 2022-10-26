@@ -122,8 +122,9 @@ include(FetchContent)
 set(SEAL_THROW_ON_TRANSPARENT_CIPHERTEXT OFF CACHE INTERNAL "")
 FetchContent_Declare(
         SEAL
-        GIT_REPOSITORY "https://github.com/microsoft/SEAL"
-        GIT_TAG "2d2a25c916047d2f356d45ad50c98f0a9695905a"
+	GIT_REPOSITORY "https://gitee.com/david-sdu/SEAL.git"
+	#GIT_REPOSITORY "https://github.com/microsoft/SEAL"
+        GIT_TAG "71636d689a65da844a0d86c7308ff79d0954fa2b"
 )
 FetchContent_MakeAvailable(SEAL)
 # find_package(SEAL 4.0 QUIET REQUIRED)
@@ -139,7 +140,8 @@ FetchContent_MakeAvailable(SEAL)
 # Microsoft Kuku
 FetchContent_Declare(
     Kuku
-    GIT_REPOSITORY "https://github.com/microsoft/Kuku"
+    #GIT_REPOSITORY "https://github.com/microsoft/Kuku"
+    GIT_REPOSITORY "https://gitee.com/mirrors_microsoft/Kuku.git"
     GIT_TAG "1338c4ae2211ab4c739022ff57f48ce5a76531d5"
 )
 FetchContent_MakeAvailable(Kuku)
@@ -162,7 +164,8 @@ FetchContent_MakeAvailable(Kuku)
     # else()
     message(STATUS "Flatbuffers: found")
     # get_target_property(FLATBUFFERS_FLATC_PATH flatbuffers::flatc IMPORTED_LOCATION_RELEASE)
-    set(FLATBUFFERS_FLATC_PATH "/opt/homebrew/bin/flatc")
+    #set(FLATBUFFERS_FLATC_PATH "/opt/homebrew/bin/flatc")
+    set(FLATBUFFERS_FLATC_PATH "/usr/local/bin/flatc")
     message(STATUS "flatc path: ${FLATBUFFERS_FLATC_PATH}")
     include(CompileSchemaCXX)
 # endif()
@@ -170,7 +173,8 @@ FetchContent_MakeAvailable(Kuku)
 # jsoncpp: for parameter configuration
 FetchContent_Declare(
     JsonCpp
-    GIT_REPOSITORY "https://github.com/open-source-parsers/jsoncpp"
+    #GIT_REPOSITORY "https://github.com/open-source-parsers/jsoncpp"
+    GIT_REPOSITORY "https://gitee.com/mirrors/jsoncpp.git"
 )
 FetchContent_MakeAvailable(JsonCpp)
 # find_package(jsoncpp REQUIRED)
@@ -436,8 +440,10 @@ endif()
 
 if(APSI_BUILD_CLI)
     link_directories(
-        /opt/homebrew/Cellar/flatbuffers/2.0.7/lib
-        /Users/chb/Projects/deps/APSI/build/lib)
+	/home/cuibo/workspace/apsi_lib/APSI/build/lib
+	/usr/local/lib)
+	    #/opt/homebrew/Cellar/flatbuffers/2.0.7/lib
+	    #/Users/chb/Projects/deps/APSI/build/lib)
     add_library(common_cli OBJECT)
     add_subdirectory(cli/common)
     target_include_directories(common_cli PUBLIC cli)

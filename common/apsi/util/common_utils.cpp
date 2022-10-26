@@ -133,6 +133,7 @@ void print_timing_report(const Stopwatch &stopwatch)
 
 void throw_if_file_invalid(const string &file_name)
 {
+    return ;
     fs::path file(file_name);
 
     if (!fs::exists(file)) {

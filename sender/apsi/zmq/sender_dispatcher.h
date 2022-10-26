@@ -44,7 +44,7 @@ namespace apsi {
             /**
             Run the dispatcher on the given port.
             */
-            void run(const std::atomic<bool> &stop, int port);
+            void run(std::atomic<bool> &stop, int port);
 
         private:
             std::shared_ptr<sender::SenderDB> sender_db_;

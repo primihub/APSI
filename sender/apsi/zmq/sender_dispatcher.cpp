@@ -56,7 +56,7 @@ namespace apsi {
             }
         }
 
-        void ZMQSenderDispatcher::run(const atomic<bool> &stop, int port)
+        void ZMQSenderDispatcher::run(atomic<bool> &stop, int port)
         {
             ZMQSenderChannel chl;
 
@@ -98,6 +98,7 @@ namespace apsi {
                 case SenderOperationType::sop_query:
                     APSI_LOG_INFO("Received query");
                     dispatch_query(move(sop), chl);
+		    stop.store(true);
                     break;
 
                 default:

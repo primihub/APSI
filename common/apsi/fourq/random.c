@@ -19,7 +19,7 @@ NTSTATUS last_bcrypt_error = 0;
 #include <unistd.h>
 static int lock = -1;
 #endif
-
+#define __LINUX__
 #ifdef __LINUX__
 static __inline void delay(unsigned int count)
 {
