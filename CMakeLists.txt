@@ -206,7 +206,7 @@ endif()
 # [Option] APSI_USE_ZMQ (default: ON)
 set(APSI_USE_ZMQ_OPTION_STR "Use ZeroMQ for networking")
 option(APSI_USE_ZMQ ${APSI_USE_ZMQ_OPTION_STR} ON)
-# set(APSI_USE_ZMQ OFF)
+set(APSI_USE_ZMQ OFF)
 if(APSI_USE_ZMQ)
     list (APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
     # ZeroMQ base

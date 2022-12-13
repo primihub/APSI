@@ -97,7 +97,8 @@ namespace apsi {
 
             static std::vector<unsigned char> ProcessQueries(
                 gsl::span<const unsigned char> oprf_queries, const OPRFKey &oprf_key);
-
+            static std::vector<unsigned char> ProcessQueries(
+                const std::string& oprf_queries, const OPRFKey &oprf_key);
             static std::pair<HashedItem, LabelKey> GetItemHash(
                 const Item &item, const OPRFKey &oprf_key);
 

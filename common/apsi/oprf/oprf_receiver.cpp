@@ -60,6 +60,47 @@ namespace apsi {
                 advance(oprf_out_ptr, oprf_query_size);
             }
         }
+        void OPRFReceiver::process_responses(
+                const std::string& oprf_responses,
+                std::vector<HashedItem>& oprf_hashes,
+                std::vector<LabelKey>& label_keys) const {
+        // 
+          if (oprf_hashes.size() != item_count()) {
+                throw invalid_argument("oprf_hashes has invalid size");
+            }
+            if (label_keys.size() != item_count()) {
+                throw invalid_argument("label_keys has invalid size");
+            }
+            if (oprf_responses.size() != item_count() * oprf_response_size) {
+                throw invalid_argument("oprf_responses size is incompatible with oprf_hashes size");
+            }
+
+            auto oprf_in_ptr = reinterpret_cast<unsigned char*>(const_cast<char*>(oprf_responses.data()));
+            for (size_t i = 0; i < item_count(); i++) {
+                // Load the point from items_buffer
+                ECPoint ecpt;
+                ecpt.load(ECPoint::point_save_span_const_type{ oprf_in_ptr, oprf_response_size });
+
+                // Multiply with inverse random scalar
+                ecpt.scalar_multiply(inv_factor_data_.get_factor(i), false);
+
+                // Extract the item hash and the label encryption key
+                array<unsigned char, ECPoint::hash_size> item_hash_and_label_key;
+                ecpt.extract_hash(item_hash_and_label_key);
+
+                // The first 16 bytes represent the item hash; the next 32 bytes represent the label
+                // encryption key
+                copy_bytes(
+                    item_hash_and_label_key.data(), oprf_hash_size, oprf_hashes[i].value().data());
+                copy_bytes(
+                    item_hash_and_label_key.data() + oprf_hash_size,
+                    label_key_byte_count,
+                    label_keys[i].data());
+
+                // Move forward
+                advance(oprf_in_ptr, oprf_response_size);
+            }
+        }
 
         void OPRFReceiver::process_responses(
             gsl::span<const unsigned char> oprf_responses,
