@@ -28,21 +28,22 @@ def apsi_dependencies():
             "https://github.com/google/glog/archive/c8f8135a5720aee7de8328b42e4c43f8aa2e60aa.zip"
         ],
     )
+    #maybe(
+    #    http_archive,
+    #    name = "com_github_google_flatbuffers",
+    #    url = "https://github.com/google/flatbuffers/archive/refs/tags/v2.0.8.tar.gz",
+    #    strip_prefix = "flatbuffers-2.0.8",
+    #    # sha256 = "fec6281e4109115c5157ca720b8fe20c8f655f773172290b03f57353c11869c2",
+    #)
     maybe(
         http_archive,
         name = "com_github_google_flatbuffers",
-        url = "https://github.com/google/flatbuffers/archive/refs/tags/v2.0.8.tar.gz",
-        strip_prefix = "flatbuffers-2.0.8",
-        # sha256 = "fec6281e4109115c5157ca720b8fe20c8f655f773172290b03f57353c11869c2",
+        # sha256 = "9ddb9031798f4f8754d00fca2f1a68ecf9d0f83dfac7239af1311e4fd9a565c4",
+        strip_prefix = "flatbuffers-2.0.0",
+        urls = [
+            "https://github.com/google/flatbuffers/archive/refs/tags/v2.0.0.tar.gz"
+        ],
     )
-    # http_archive(
-    #     name = "com_github_google_flatbuffers",
-    #     # sha256 = "9ddb9031798f4f8754d00fca2f1a68ecf9d0f83dfac7239af1311e4fd9a565c4",
-    #     strip_prefix = "flatbuffers-2.0.0",
-    #     urls = [
-    #         "https://github.com/google/flatbuffers/archive/refs/tags/v2.0.0.tar.gz"
-    #     ],
-    # )
 
     maybe(
         # gflags Needed for glog
