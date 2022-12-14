@@ -67,6 +67,54 @@ namespace apsi {
             }
             stream.exceptions(old_except_mask);
         }
+        std::vector<unsigned char> OPRFSender::ProcessQueries(
+                const std::string& oprf_queries, const OPRFKey &oprf_key) {
+          //
+          if (oprf_queries.size() % oprf_query_size) {
+                throw invalid_argument("oprf_queries has invalid size");
+            }
+
+            STOPWATCH(sender_stopwatch, "OPRFSender::ProcessQueries");
+
+            size_t query_count = oprf_queries.size() / oprf_query_size;
+            vector<unsigned char> oprf_responses(query_count * oprf_response_size);
+
+            auto oprf_in_ptr = reinterpret_cast<unsigned char*>(const_cast<char*>(oprf_queries.data()));
+            auto oprf_out_ptr = oprf_responses.data();
+
+            ThreadPoolMgr tpm;
+            size_t task_count = min<size_t>(ThreadPoolMgr::GetThreadCount(), query_count);
+            vector<future<void>> futures(task_count);
+
+            auto ProcessQueriesLambda = [&](size_t start_idx, size_t step) {
+                for (size_t idx = start_idx; idx < query_count; idx += step) {
+                    // Load the point from input buffer
+                    ECPoint ecpt;
+                    ecpt.load(ECPoint::point_save_span_const_type{
+                        oprf_in_ptr + idx * oprf_query_size, oprf_query_size });
+
+                    // Multiply with key
+                    if (!ecpt.scalar_multiply(oprf_key.key_span(), true)) {
+                        throw logic_error("scalar multiplication failed due to invalid query data");
+                    }
+
+                    // Save the result to oprf_responses
+                    ecpt.save(ECPoint::point_save_span_type{
+                        oprf_out_ptr + idx * oprf_response_size, oprf_response_size });
+                }
+            };
+
+            for (size_t thread_idx = 0; thread_idx < task_count; thread_idx++) {
+                futures[thread_idx] =
+                    tpm.thread_pool().enqueue(ProcessQueriesLambda, thread_idx, task_count);
+            }
+
+            for (auto &f : futures) {
+                f.get();
+            }
+
+            return oprf_responses;
+        }
 
         vector<unsigned char> OPRFSender::ProcessQueries(
             gsl::span<const unsigned char> oprf_queries, const OPRFKey &oprf_key)

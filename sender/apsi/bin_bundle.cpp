@@ -10,7 +10,11 @@
 
 // APSI
 #include "apsi/bin_bundle.h"
+#ifdef BAZEL_BUILD
+#include "sender/apsi/bin_bundle_generated.h"
+#else
 #include "apsi/bin_bundle_generated.h"
+#endif
 #include "apsi/thread_pool_mgr.h"
 #include "apsi/util/interpolate.h"
 #include "apsi/util/utils.h"

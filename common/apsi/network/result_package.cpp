@@ -10,7 +10,11 @@
 #include "apsi/item.h"
 #include "apsi/log.h"
 #include "apsi/network/result_package.h"
+#ifdef BAZEL_BUILD
+#include "common/apsi/network/result_package_generated.h"
+#else
 #include "apsi/network/result_package_generated.h"
+#endif
 #include "apsi/network/sender_operation.h"
 #include "apsi/util/utils.h"
 

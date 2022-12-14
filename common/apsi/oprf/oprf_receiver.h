@@ -43,6 +43,11 @@ namespace apsi {
             }
 
             void process_responses(
+                const std::string& oprf_responses,
+                std::vector<HashedItem>& oprf_hashes,
+                std::vector<LabelKey>& label_keys) const;
+
+            void process_responses(
                 gsl::span<const unsigned char> oprf_responses,
                 gsl::span<HashedItem> oprf_hashes,
                 gsl::span<LabelKey> label_keys) const;

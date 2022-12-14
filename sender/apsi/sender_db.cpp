@@ -12,7 +12,11 @@
 // APSI
 #include "apsi/psi_params.h"
 #include "apsi/sender_db.h"
+#ifdef BAZEL_BUILD
+#include "sender/apsi/sender_db_generated.h"
+#else
 #include "apsi/sender_db_generated.h"
+#endif
 #include "apsi/thread_pool_mgr.h"
 #include "apsi/util/db_encoding.h"
 #include "apsi/util/label_encryptor.h"

@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 include "psi_params.fbs";
-
 namespace apsi.fbs;
 
 struct HashedItem {

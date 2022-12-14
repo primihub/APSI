@@ -9,7 +9,11 @@
 
 // APSI
 #include "apsi/psi_params.h"
+#ifdef BAZEL_BUILD
+#include "common/apsi/psi_params_generated.h"
+#else
 #include "apsi/psi_params_generated.h"
+#endif
 #include "apsi/version.h"
 #include "apsi/util/utils.h"
 

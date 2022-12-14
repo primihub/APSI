@@ -94,7 +94,8 @@ namespace apsi {
         class OPRFSender {
         public:
             OPRFSender() = delete;
-
+            static std::vector<unsigned char> ProcessQueries(
+                const std::string& oprf_queries, const OPRFKey &oprf_key);
             static std::vector<unsigned char> ProcessQueries(
                 gsl::span<const unsigned char> oprf_queries, const OPRFKey &oprf_key);
 
