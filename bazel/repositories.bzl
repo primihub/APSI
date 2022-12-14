@@ -3,7 +3,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
-def apsi_dependencies():
+def apsi_dependencies(repo_reference=""):
+    reference_index = ""
+    if repo_reference:
+        reference_index = "@{}".format(repo_reference)
     maybe(
         http_archive,
         name = "rules_foreign_cc",
@@ -17,7 +20,7 @@ def apsi_dependencies():
         url = "https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1o.tar.gz",
         sha256 = "0f745b85519aab2ce444a3dcada93311ba926aea2899596d01e7f948dbd99981",
         strip_prefix = "openssl-OpenSSL_1_1_1o",
-        build_file = "//bazel:openssl.BUILD",
+        build_file = "{}//bazel:openssl.BUILD".format(reference_index),
     )
     maybe(
         http_archive,
@@ -60,7 +63,7 @@ def apsi_dependencies():
         new_git_repository,
         #name = "com_github_microsoft_seal",  #version 4.0
         name = "com_github_primihub_seal_40",  #version 4.0
-        build_file = "//bazel:seal.BUILD",
+        build_file = "{}//bazel:seal.BUILD".format(reference_index),
         remote = "https://github.com/primihub/SEAL.git",
         branch = "change_submodule_resource",
     )
@@ -68,7 +71,7 @@ def apsi_dependencies():
         # needed by APSI
         new_git_repository,
         name = "com_microsoft_kuku",
-        build_file = "//bazel:kuku.BUILD",
+        build_file = "{}//bazel:kuku.BUILD".format(reference_index),
         branch = "2.1.0",
         remote = "https://github.com/microsoft/Kuku.git",
     )
@@ -85,7 +88,7 @@ def apsi_dependencies():
     maybe(
         http_archive,
         name = "com_github_microsoft_gsl",
-        build_file = "//bazel:gsl.BUILD",
+        build_file = "{}//bazel:gsl.BUILD".format(reference_index),
         sha256 = "f0e32cb10654fea91ad56bde89170d78cfbf4363ee0b01d8f097de2ba49f6ce9",
         strip_prefix = "GSL-4.0.0",
         urls = [
