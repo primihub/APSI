@@ -153,7 +153,7 @@ namespace apsi {
         */
         gsl::span<unsigned char> data()
         {
-            return { data_.data(), data_.size() };
+            return gsl::span<unsigned char>(data_.data(), static_cast<std::size_t>(data_.size()));
         }
 
         /**
@@ -161,7 +161,7 @@ namespace apsi {
         */
         gsl::span<const unsigned char> data() const
         {
-            return { data_.data(), data_.size() };
+            return gsl::span<const unsigned char>(data_.data(), static_cast<std::size_t>(data_.size()));
         }
 
         /**

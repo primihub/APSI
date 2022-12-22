@@ -54,7 +54,7 @@ public:
             return {};
         }
         std::size_t count = label_.size() / sizeof(T);
-        return { reinterpret_cast<std::add_const_t<T> *>(label_.data()), count };
+        return gsl::span<std::add_const_t<T>>(reinterpret_cast<std::add_const_t<T> *>(label_.data()), count); 
     }
 
     /**
@@ -66,7 +66,7 @@ public:
             return {};
         }
         auto string_data = get_as<CharT>();
-        return { string_data.data(), string_data.size() };
+        return std::basic_string<CharT>(string_data.data(), string_data.size());
     }
 
     /**

@@ -12,7 +12,9 @@
 #ifdef __linux__
 #define __LINUX__
 #endif
-
+#ifdef __APPLE__
+#define __LINUX__
+#endif
 #if defined(__WINDOWS__)
 #include <windows.h>
 #include <bcrypt.h>
