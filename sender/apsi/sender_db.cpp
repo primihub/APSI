@@ -532,12 +532,12 @@ namespace apsi {
               compressed_(compressed)
         {
             // The labels cannot be more than 1 KB.
-            if (label_byte_count_ > 1024) {
-                APSI_LOG_ERROR(
-                    "Requested label byte count " << label_byte_count_
-                                                  << " exceeds the maximum (1024)");
-                throw invalid_argument("label_byte_count is too large");
-            }
+            // if (label_byte_count_ > 1024) {
+            //     APSI_LOG_ERROR(
+            //         "Requested label byte count " << label_byte_count_
+            //                                       << " exceeds the maximum (1024)");
+            //     throw invalid_argument("label_byte_count is too large");
+            // }
 
             if (nonce_byte_count_ > max_nonce_byte_count) {
                 APSI_LOG_ERROR(
