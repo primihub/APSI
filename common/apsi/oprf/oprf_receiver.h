@@ -125,6 +125,8 @@ namespace apsi {
             seal::DynArray<unsigned char> oprf_queries_;
 
             FactorData inv_factor_data_;
+            size_t thread_num_{10};
+            size_t items_threadhold_{10000};
         }; // class OPRFReceiver
     }      // namespace oprf
 } // namespace apsi
