@@ -154,7 +154,7 @@ PSIParams Receiver::RequestParams(NetworkChannel &chl)
 OPRFReceiver Receiver::CreateOPRFReceiver(const vector<Item> &items)
 {
     STOPWATCH(recv_stopwatch, "Receiver::CreateOPRFReceiver");
-
+    APSI_LOG_INFO("begin Create OPRFReceiver for " << items.size() << " items");
     OPRFReceiver oprf_receiver(items);
     APSI_LOG_INFO("Created OPRFReceiver for " << oprf_receiver.item_count() << " items");
 
