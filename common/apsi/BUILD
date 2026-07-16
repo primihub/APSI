@@ -58,6 +58,13 @@ cc_library(
 #     ],
 #     visibility = ["//visibility:public"],
 # )
+genrule(
+    name = "gen_apsi_config_h",
+    srcs = ["config.h.in"],
+    outs = ["config.h"],
+    cmd = "sed -e 's/@APSI_VERSION@/0.8.2/g' -e 's/@APSI_VERSION_MAJOR@/0/g' -e 's/@APSI_VERSION_MINOR@/8/g' -e 's/@APSI_VERSION_PATCH@/2/g' -e 's|#cmakedefine APSI_USE_CXX17|#define APSI_USE_CXX17|g' -e 's|^#cmakedefine|// #cmakedefine|g' $< > $@",
+)
+
 cc_library(
     name = "version_lib",
     srcs = [
