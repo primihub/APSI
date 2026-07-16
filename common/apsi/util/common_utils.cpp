@@ -19,7 +19,7 @@
 #include "apsi/log.h"
 #include "apsi/psi_params.h"
 #include "apsi/util/utils.h"
-#include "apsi/util/base_clp.h"
+// #include "apsi/util/base_clp.h"
 
 using namespace std;
 #if defined(__GNUC__) && (__GNUC__ < 8) && !defined(__clang__)

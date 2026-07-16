@@ -43,6 +43,11 @@ namespace apsi {
             }
 
             void process_responses(
+                const std::string& oprf_responses,
+                std::vector<HashedItem>& oprf_hashes,
+                std::vector<LabelKey>& label_keys) const;
+
+            void process_responses(
                 gsl::span<const unsigned char> oprf_responses,
                 gsl::span<HashedItem> oprf_hashes,
                 gsl::span<LabelKey> label_keys) const;
@@ -120,6 +125,8 @@ namespace apsi {
             seal::DynArray<unsigned char> oprf_queries_;
 
             FactorData inv_factor_data_;
+            size_t thread_num_{10};
+            size_t items_threadhold_{10000};
         }; // class OPRFReceiver
     }      // namespace oprf
 } // namespace apsi

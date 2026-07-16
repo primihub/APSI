@@ -8,8 +8,13 @@
 
 // APSI
 #include "apsi/network/sender_operation.h"
+#ifdef BAZEL_BUILD
+#include "common/apsi/network/sop_generated.h"
+#include "common/apsi/network/sop_header_generated.h"
+#else
 #include "apsi/network/sop_generated.h"
 #include "apsi/network/sop_header_generated.h"
+#endif
 #include "apsi/util/utils.h"
 
 // SEAL

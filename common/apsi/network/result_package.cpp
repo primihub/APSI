@@ -10,7 +10,11 @@
 #include "apsi/item.h"
 #include "apsi/log.h"
 #include "apsi/network/result_package.h"
+#ifdef BAZEL_BUILD
+#include "common/apsi/network/result_package_generated.h"
+#else
 #include "apsi/network/result_package_generated.h"
+#endif
 #include "apsi/network/sender_operation.h"
 #include "apsi/util/utils.h"
 
@@ -128,9 +132,9 @@ namespace apsi {
             // though, so it is important to check that when the label data has been decrypted and
             // decoded.
             label_byte_count = rp->label_byte_count();
-            if (label_byte_count > 1024) {
-                throw runtime_error("failed to load ResultPackage: label_byte_count is too large");
-            }
+            //if (label_byte_count > 1024) {
+            //    throw runtime_error("failed to load ResultPackage: label_byte_count is too large");
+            //}
             if (label_byte_count && !rp->label_result()) {
                 throw runtime_error("failed to load ResultPackage: label data is missing");
             }

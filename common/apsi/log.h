@@ -7,7 +7,7 @@
 #include <cstdarg>
 #include <sstream>
 #include <string>
-
+#include <glog/logging.h>
 namespace apsi {
     /**
     Class that provides the logging interface.
@@ -53,32 +53,19 @@ namespace apsi {
         break;                                   \
     }
 
-#define APSI_INTERNAL_DO_LOG(msg, msg_level) \
-    std::stringstream log_ss;                \
-    log_ss << msg;                           \
-    std::string log_str = log_ss.str();      \
-    apsi::Log::DoLog(log_str, msg_level);
 
 #define APSI_LOG_DEBUG(msg)                                     \
-    do {                                                        \
-        APSI_INTERNAL_CHECK_LOG_LEVEL(apsi::Log::Level::debug); \
-        APSI_INTERNAL_DO_LOG(msg, apsi::Log::Level::debug);     \
-    } while (0);
+    VLOG(5) << msg;
+
 
 #define APSI_LOG_INFO(msg)                                     \
-    do {                                                       \
-        APSI_INTERNAL_CHECK_LOG_LEVEL(apsi::Log::Level::info); \
-        APSI_INTERNAL_DO_LOG(msg, apsi::Log::Level::info);     \
-    } while (0);
+    LOG(INFO) << msg;
+
 
 #define APSI_LOG_WARNING(msg)                                     \
-    do {                                                          \
-        APSI_INTERNAL_CHECK_LOG_LEVEL(apsi::Log::Level::warning); \
-        APSI_INTERNAL_DO_LOG(msg, apsi::Log::Level::warning);     \
-    } while (0);
+    LOG(WARNING) << msg;
+
 
 #define APSI_LOG_ERROR(msg)                                     \
-    do {                                                        \
-        APSI_INTERNAL_CHECK_LOG_LEVEL(apsi::Log::Level::error); \
-        APSI_INTERNAL_DO_LOG(msg, apsi::Log::Level::error);     \
-    } while (0);
+    LOG(ERROR) << msg;
+

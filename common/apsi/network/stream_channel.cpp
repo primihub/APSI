@@ -8,9 +8,15 @@
 
 // APSI
 #include "apsi/log.h"
+#ifdef BAZEL_BUILD
+#include "common/apsi/network/result_package_generated.h"
+#include "common/apsi/network/sop_generated.h"
+#include "common/apsi/network/sop_header_generated.h"
+#else
 #include "apsi/network/result_package_generated.h"
 #include "apsi/network/sop_generated.h"
 #include "apsi/network/sop_header_generated.h"
+#endif
 #include "apsi/network/stream_channel.h"
 
 using namespace std;

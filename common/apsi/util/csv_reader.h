@@ -33,10 +33,15 @@ public:
 
     CSVReader(const std::string &file_name);
 
-    std::pair<DBData, std::vector<std::string>> read(std::istream &stream) const;
+    std::pair<DBData, std::vector<std::string>> read(std::istream &stream);
 
-    std::pair<DBData, std::vector<std::string>> read() const;
+    std::pair<DBData, std::vector<std::string>> read();
 
+protected:
+    std::pair<std::map<std::string, std::string>, bool> pre_process(std::istream& stream);
+    std::pair<bool, bool> process_line( const std::string& line,
+            std::string& item,
+            std::string& label);
 private:
     std::string file_name_;
 

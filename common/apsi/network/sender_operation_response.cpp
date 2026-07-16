@@ -8,7 +8,12 @@
 
 // APSI
 #include "apsi/network/sender_operation_response.h"
+
+#ifdef BAZEL_BUILD
+#include "common/apsi/network/sop_response_generated.h"
+#else
 #include "apsi/network/sop_response_generated.h"
+#endif
 #include "apsi/util/utils.h"
 
 // SEAL
