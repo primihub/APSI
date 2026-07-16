@@ -4,7 +4,6 @@
 bin/
 build/
 *_generated.h
-**/config.h
 **/*.swp
 **/*.old
 
